@@ -3,8 +3,9 @@
 #define LARGURA 500
 #define ALTURA 500
 
-int teclado = 0;
-
+#define tx 30 //translação
+#define ty 30
+float graus = 0;
 
 void cabeca_boneco()
 {
@@ -79,28 +80,82 @@ void antebraco_boneco()
 
 }
 
-void desenha_boneco()
+void desenha_cabeca_corpo()
 {
-	glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
+	glMatrixMode(GL_MODELVIEW);
 	glClear(GL_COLOR_BUFFER_BIT);
+		
 	cabeca_boneco();
 	olhos_boneco();
 	boca_boneco();
 	corpo_boneco();
-	braco_boneco();
-	antebraco_boneco();
-	glFlush();
-	
+		
+	//glFlush();
 }
 
-/*void gerenciaTeclado(unsigned char key, int x, int y)
+void desenha_antebraco()
 {
-	switch(key)
-	{
-		case ''
-	}
+        glMatrixMode(GL_MODELVIEW);
+        glClear(GL_COLOR_BUFFER_BIT);
 
-}*/
+        antebraco_boneco();
+
+	//glFlush();
+}
+
+
+void desenha_braco_completo()
+{
+	glMatrixMode(GL_MODELVIEW);
+	glClear(GL_COLOR_BUFFER_BIT);
+
+	braco_boneco();
+        antebraco_boneco();
+ 
+ 	glFlush();
+}
+
+
+void desenha_boneco(int flag)
+{
+	glMatrixMode(GL_MODELVIEW);
+	glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
+	glClear(GL_COLOR_BUFFER_BIT);
+
+	if(flag==0)
+	{
+	cabeca_boneco();
+	olhos_boneco();
+	boca_boneco();
+	corpo_boneco();
+	
+	glPushMatrix();
+
+	glTranslatef(115, 295, 0);
+	glRotatef(graus, 0, 0, 1);
+	glTranslatef(-115, -295, 0);
+
+	braco_boneco();
+	antebraco_boneco();
+	
+	glPopMatrix();
+
+	}else
+	{
+		glPushMatrix();
+				
+		glTranslatef(115, 295, 0);
+		glRotatef(graus, 0, 0, 1);
+		glTranslatef(-115, -295, 0);
+		braco_boneco();
+		antebraco_boneco();
+
+		glPopMatrix();
+
+	}
+	glFlush();
+
+}
 
 void Desenha(void)
 {
@@ -109,8 +164,7 @@ void Desenha(void)
 	glLoadIdentity();
 	glClear(GL_COLOR_BUFFER_BIT);
 	
-	/*glTranslatef(150.0f, 250.0f ,0.0f);*/
-	desenha_boneco();
+	desenha_boneco(0);
 	
 	glFlush();
 }
@@ -120,17 +174,54 @@ void SpecialKeys(int key, int x, int y)
 
         if(key == GLUT_KEY_UP)
 	{
-		 glTranslatef(150.0, 250.0, 0.0);
+
+		glPushMatrix();
+	       	glTranslatef(1, ty, 0);
+		desenha_boneco(0);
+				
+
 	}else if(key == GLUT_KEY_DOWN)
 	{
-		glTranslatef(1.0, -5.0, 0.0);
+		glPushMatrix();
+		glTranslatef(1, -ty, 0);
+		desenha_boneco(0);
 	}else if(key == GLUT_KEY_LEFT)
 	{
-		glTranslatef(-5.0, 1.0, 0.0);
+		glPushMatrix();
+		glTranslatef(-tx, 1, 0);
+		desenha_boneco(0);
 	}else if(key == GLUT_KEY_RIGHT)
 	{
-		glTranslatef(5.0, 1.0, 0.0);
+		glPushMatrix();
+		glTranslatef(tx, 1, 0);
+		desenha_boneco(0);
 	}
+}
+
+void NormalKeys(unsigned char key, int x, int y)
+{
+        switch(key)
+        {
+		case 'a':
+			glPushMatrix();
+			glScalef(1.3, 1.3, 0);
+			desenha_boneco(0);
+                break;
+
+		case 'd':
+			glPushMatrix();
+                        glScalef(0.8, 0.8, 0);
+                        desenha_boneco(0);
+                break;
+
+		case 'r':
+			graus = graus +10;
+
+			desenha_boneco(1);
+			
+		break;
+        }
+
 }
 
 
@@ -151,6 +242,7 @@ int main(int argc, char **argv)
 	glutInitWindowPosition (100, 100);
 	glutCreateWindow("Segundo exercicio");
 	glutDisplayFunc(Desenha);
+	glutKeyboardFunc(NormalKeys);
 	glutSpecialFunc(SpecialKeys);
 	Inicializa();
 	glutMainLoop();
