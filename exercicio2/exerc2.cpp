@@ -5,7 +5,7 @@
 
 #define tx 30 //translação
 #define ty 30
-float graus = 0;
+float graus = 0, grausAntebraco = 0;
 
 void cabeca_boneco()
 {
@@ -80,7 +80,7 @@ void antebraco_boneco()
 
 }
 
-void desenha_cabeca_corpo()
+/*void desenha_cabeca_corpo()
 {
 	glMatrixMode(GL_MODELVIEW);
 	glClear(GL_COLOR_BUFFER_BIT);
@@ -90,10 +90,10 @@ void desenha_cabeca_corpo()
 	boca_boneco();
 	corpo_boneco();
 		
-	//glFlush();
-}
+	glFlush();
+}*/
 
-void desenha_antebraco()
+/*void desenha_antebraco()
 {
         glMatrixMode(GL_MODELVIEW);
         glClear(GL_COLOR_BUFFER_BIT);
@@ -101,10 +101,10 @@ void desenha_antebraco()
         antebraco_boneco();
 
 	//glFlush();
-}
+}*/
 
 
-void desenha_braco_completo()
+/*void desenha_braco_completo()
 {
 	glMatrixMode(GL_MODELVIEW);
 	glClear(GL_COLOR_BUFFER_BIT);
@@ -113,34 +113,48 @@ void desenha_braco_completo()
         antebraco_boneco();
  
  	glFlush();
-}
+}*/
 
 
 void desenha_boneco(int flag)
 {
-	glMatrixMode(GL_MODELVIEW);
-	glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
+	//glMatrixMode(GL_MODELVIEW);
+	//glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT);
 
 	if(flag==0)
 	{
-	cabeca_boneco();
-	olhos_boneco();
-	boca_boneco();
-	corpo_boneco();
+		
+		cabeca_boneco();
+		olhos_boneco();
+		boca_boneco();
+		corpo_boneco();
 	
-	glPushMatrix();
+		glPushMatrix();
 
-	glTranslatef(115, 295, 0);
-	glRotatef(graus, 0, 0, 1);
-	glTranslatef(-115, -295, 0);
+		glTranslatef(115, 295, 0);
+		glRotatef(graus, 0, 0, 1);
+		glTranslatef(-115, -295, 0);
 
-	braco_boneco();
-	antebraco_boneco();
+		if(graus == grausAntebraco)
+		{
+			braco_boneco();
+			antebraco_boneco();
+		}else
+		{
+			braco_boneco();
+			antebraco_boneco();
+			glPopMatrix();
+
+			glTranslatef(115, 197.5, 0);
+	                glRotatef(grausAntebraco, 0, 0, 1);
+	                glTranslatef(-115, -197.5, 0);
+	                antebraco_boneco();
+		}
 	
-	glPopMatrix();
+		glPopMatrix();
 
-	}else
+	}else if(flag==1)//rotacao do braco completo
 	{
 		glPushMatrix();
 				
@@ -152,6 +166,21 @@ void desenha_boneco(int flag)
 
 		glPopMatrix();
 
+		glPushMatrix();	
+		desenha_boneco(0);
+	}else
+	{
+		glPushMatrix();
+
+		glTranslatef(115, 197.5, 0);
+		glRotatef(grausAntebraco, 0, 0, 1);
+		glTranslatef(-115, -197.5, 0);
+		antebraco_boneco();
+
+		glPopMatrix();
+
+		glPushMatrix();
+		desenha_boneco(0);
 	}
 	glFlush();
 
@@ -162,6 +191,7 @@ void Desenha(void)
 	
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
+	glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT);
 	
 	desenha_boneco(0);
@@ -175,24 +205,24 @@ void SpecialKeys(int key, int x, int y)
         if(key == GLUT_KEY_UP)
 	{
 
-		glPushMatrix();
+		//glPushMatrix();
 	       	glTranslatef(1, ty, 0);
 		desenha_boneco(0);
 				
 
 	}else if(key == GLUT_KEY_DOWN)
 	{
-		glPushMatrix();
+		//glPushMatrix();
 		glTranslatef(1, -ty, 0);
 		desenha_boneco(0);
 	}else if(key == GLUT_KEY_LEFT)
 	{
-		glPushMatrix();
+		//glPushMatrix();
 		glTranslatef(-tx, 1, 0);
 		desenha_boneco(0);
 	}else if(key == GLUT_KEY_RIGHT)
 	{
-		glPushMatrix();
+		//glPushMatrix();
 		glTranslatef(tx, 1, 0);
 		desenha_boneco(0);
 	}
@@ -203,22 +233,27 @@ void NormalKeys(unsigned char key, int x, int y)
         switch(key)
         {
 		case 'a':
-			glPushMatrix();
+			//glPushMatrix();
 			glScalef(1.3, 1.3, 0);
 			desenha_boneco(0);
                 break;
 
 		case 'd':
-			glPushMatrix();
+			//glPushMatrix();
                         glScalef(0.8, 0.8, 0);
                         desenha_boneco(0);
                 break;
 
 		case 'r':
-			graus = graus +10;
+			graus = graus + 10;
 
-			desenha_boneco(1);
-			
+			desenha_boneco(1);	
+		break;
+
+		case 'e':
+			grausAntebraco = grausAntebraco + 10;
+
+			desenha_boneco(2);
 		break;
         }
 
