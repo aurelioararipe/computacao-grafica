@@ -7,6 +7,7 @@
 #define ty 30
 float graus = 0, grausAntebraco = 0;
 
+
 void cabeca_boneco()
 {
         glBegin(GL_QUADS);
@@ -168,10 +169,11 @@ void desenha_boneco(int flag)
 
 		glPushMatrix();	
 		desenha_boneco(0);
-	}else
+	}else //rotacao do antebraco
 	{
-		glPushMatrix();
 
+		glPushMatrix();
+		
 		glTranslatef(115, 197.5, 0);
 		glRotatef(grausAntebraco, 0, 0, 1);
 		glTranslatef(-115, -197.5, 0);
@@ -180,6 +182,8 @@ void desenha_boneco(int flag)
 		glPopMatrix();
 
 		glPushMatrix();
+
+
 		desenha_boneco(0);
 	}
 	glFlush();
@@ -245,7 +249,7 @@ void NormalKeys(unsigned char key, int x, int y)
                 break;
 
 		case 'r':
-			graus = graus + 10;
+			graus = graus + 60;
 
 			desenha_boneco(1);	
 		break;
