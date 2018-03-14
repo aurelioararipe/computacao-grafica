@@ -31,6 +31,39 @@ void corpo_boneco()
 		glVertex2i(115, 295);
 		glVertex2i(115, 100);
 	glEnd();
+
+	glBegin(GL_TRIANGLES);
+		glColor3f(0.0f,0.0f,0.0f);
+		glVertex2i(35, 230);
+		glVertex2i(60, 230);
+		glVertex2i(40, 260);		
+	glEnd();
+
+	glBegin(GL_LINES);
+		glColor3f(0.0f,0.0f,0.0f);
+		glVertex2i(20, 230);
+		glVertex2i(115, 230);
+	glEnd();
+
+	glBegin(GL_TRIANGLES);
+		glColor3f(0.0f,0.0f,0.0f);
+                glVertex2i(75, 230);
+                glVertex2i(100, 230);
+                glVertex2i(95, 260);
+	glEnd();
+
+	glBegin(GL_LINES);
+		glColor3f(0.0f,0.0f,0.0f);
+		glVertex2i(40, 260);
+		glVertex2i(30, 295);
+	glEnd();
+
+	glBegin(GL_LINES);
+                glColor3f(0.0f,0.0f,0.0f);
+	        glVertex2i(95, 260);
+	        glVertex2i(105, 295);
+	glEnd();
+
 }	
 
 void olhos_boneco()
@@ -144,12 +177,12 @@ void desenha_boneco(int flag)
 		}else
 		{
 			braco_boneco();
-			antebraco_boneco();
-			glPopMatrix();
-
-			glTranslatef(115, 197.5, 0);
+			//antebraco_boneco();
+			//glPopMatrix();
+			
+			glTranslatef(135, 197.5, 0);
 	                glRotatef(grausAntebraco, 0, 0, 1);
-	                glTranslatef(-115, -197.5, 0);
+	                glTranslatef(-135, -197.5, 0);
 	                antebraco_boneco();
 		}
 	
@@ -174,9 +207,9 @@ void desenha_boneco(int flag)
 
 		glPushMatrix();
 		
-		glTranslatef(115, 197.5, 0);
+		glTranslatef(135, 197.5, 0);
 		glRotatef(grausAntebraco, 0, 0, 1);
-		glTranslatef(-115, -197.5, 0);
+		glTranslatef(-135, -197.5, 0);
 		antebraco_boneco();
 
 		glPopMatrix();
@@ -249,7 +282,7 @@ void NormalKeys(unsigned char key, int x, int y)
                 break;
 
 		case 'r':
-			graus = graus + 60;
+			graus = graus + 30;
 
 			desenha_boneco(1);	
 		break;
