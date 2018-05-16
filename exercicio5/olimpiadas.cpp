@@ -81,7 +81,7 @@ void Desenha_Aneis()
 		glVertex3d(lado_cubo/2, lado_cubo,-lado_cubo/2);
 	glEnd();*/
 	//glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	
+/*	
 	glBegin(GL_TRIANGLES);
 	        glColor3f(1.0f, 0.0f, 0.0f);
 	        glVertex3i(7, 3, 0);
@@ -89,15 +89,15 @@ void Desenha_Aneis()
                 glVertex3i(4, 6, 0);
                 glVertex3i(10, 6, 0);
         glEnd();
-
+*/
 
 	glPushMatrix();
-	glColor3f(0, 0, 1.0);
+	glColor3f(0.5, 0.5, 1.0);
 	glTranslatef(-4.5, 0, 0); 
 	glutSolidTorus(0.2, 1.8, 20, 20);
 	glPopMatrix();
 	
-	glColor3f(1,1,1);
+	glColor3f(0,0,0);
 	glutSolidTorus(0.2, 1.8, 20, 20);
 	
 	glPushMatrix();
@@ -107,7 +107,7 @@ void Desenha_Aneis()
 	glPopMatrix();
 	
 	glPushMatrix();
-	glColor3f(0.5, 0.5, 0);
+	glColor3f(1, 1, 0);
 	glTranslatef(-2.25, -1.75, 0.4);
         glutSolidTorus(0.2, 1.8, 20, 20);
 	glPopMatrix();
@@ -261,6 +261,7 @@ void Inicializa (void)
     /*************** Parâmetros de Iluminação ***************/
 	/* Habilita o uso de iluminação */
 	glEnable(GL_LIGHTING);
+	glEnable(GL_COLOR_MATERIAL);
 	/* Habilita a luz de número 0 */
 	glEnable(GL_LIGHT0);
 	/* Habilita o depth-buffering para remoção de faces escondidas */
